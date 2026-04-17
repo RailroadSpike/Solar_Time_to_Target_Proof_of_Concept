@@ -1,27 +1,25 @@
-# proof of concept for determining a circular orbit
+# proof of concept for calculating intercept time to a target in Solar cataphracts
 # define a Hex class with q,r,s coordinates
-# define a Universe class, consisting of 3d matrix Hex objects, stored in a three-dimensional matrix
-#   The univers also defines a universal radius, which is the distance between the center of two hexes
-#   The center of the univers is coordinate 0,0,0
 
-# Define CelestialBody class
-#   CelstialBody has an orbit radius as a factor of the universal radius
-#   CelstialBody has a starting hex, which is orbit_radius from the center of the univers.  This is defined as a
-#   CelestialBody has an orbit, which is an ordered list starting at the starting hex, and includes every hex which is part of its orbit
+# create functions for determining hex and euclidian distance between hexes
+# create functions to calculate travel time based on distance to a hex
+# Perhaps try some route optimization
 
-import numpy as np  #need this for 3d arrays and some math
+# proof of concept does not include heat management or ship velocity vector.  Assumes ship at rest traveling in a strait line
+
+import numpy as np  #may be needed for 3d arrays and some math
 import math
-import matplotlib.pyplot as plt  # used to draw our hexes and orbits
-from sympy import symbols #used to algebraically solve where
+import matplotlib.pyplot as plt  #  may be used in the future to draw our hexes and orbits
+from sympy import symbols # may be used for some symbolic algebra later
 
 
-# hex grid, defined using triaxials coordinates
+# hex , defined using triaxials coordinates
 # q axis is 60 degrees counter-clockwise of the vertical
 # r axis vertical
 # s axis is 60 degrees clockwise of the vertical
-# HEX HEIGHT D IS THE UNIT OF MEASUREMENT;  so all measurements can be considered to be a factor of D.
+# HEX center to center distance D IS THE UNIT OF MEASUREMENT;  so all measurements can be considered to be a factor of D.
 class Hex:
-    def __init__(self, q,r,s):  # coordinates defining the hex; uses cubic coordinates
+    def __init__(self, q,r,s):  # coordinates defining the hex; uses triax
         self.q = q
         self.r = r
         self.s = s
@@ -70,6 +68,8 @@ class Hex:
         # if direction == 0:
         return
 
+        # prints some basic info about the hex,
+        # also in progress
     def printHex(self): #prints the q,r,s of the hex in appropriate format
         print(self.q, ',', self.r, ',', self.s)
         return
@@ -112,6 +112,7 @@ def euclidDist(hex1, hex2):
     return math.sqrt((hex1.xEuc - hex2.xEuc)**2 + (hex1.yEuc - hex2.yEuc)**2) # pythagoras type shi
 
 
+# planet class i havent really implemented yet
 class CelestialBody:
     def __init__(self, inputRadius, inputDir, startingQ, startingR, startingS):
         self.orbitRadius = inputRadius # for this example, all orbits are assumed to be circular.  the starting hex is assumed to be on the circular orbit.  The
