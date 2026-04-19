@@ -7,10 +7,10 @@
 
 # proof of concept does not include heat management or ship velocity vector.  Assumes ship at rest traveling in a strait line
 
-import numpy as np  #may be needed for 3d arrays and some math
+#import numpy as np  #may be needed for 3d arrays and some math
 import math
-import matplotlib.pyplot as plt  #  may be used in the future to draw our hexes and orbits
-from sympy import symbols # may be used for some symbolic algebra later
+#import matplotlib.pyplot as plt  #  may be used in the future to draw our hexes and orbits
+#from sympy import symbols # may be used for some symbolic algebra later
 
 
 # hex , defined using triaxials coordinates
@@ -123,7 +123,7 @@ class CelestialBody:
 
         # time to determine which hexes comprise the celestial body's orbit.
 
-# Press the green button in the gutter to run the script.
+
 if __name__ == '__main__':
     hex1 = Hex(2,4,0)
     hex2 = Hex(-3,0,2)
@@ -146,4 +146,3 @@ if __name__ == '__main__':
     print(eDistance)
     print('end')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
