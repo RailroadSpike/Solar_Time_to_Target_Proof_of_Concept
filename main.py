@@ -54,9 +54,9 @@ if __name__ == '__main__':
     hex1 = Hex(2, 4, 0)
     hex2 = Hex(-3, 0, 2)
 
-    hex1.printHex()
+    print(hex1)
     print("\n")
-    hex2.printHex()
+    print(hex2)
     print("\n")
 
     print(hex1.xEuc, ',', hex1.yEuc)

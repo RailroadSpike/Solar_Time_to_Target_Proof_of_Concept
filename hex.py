@@ -56,8 +56,7 @@ class Hex:
         # if direction == 0:
         return
 
-        # prints some basic info about the hex,
-        # also in progress
-    def printHex(self): #prints the q,r,s of the hex in appropriate format
-        print(self.q, ',', self.r, ',', self.s)
-        return
+    # prints some basic info about the hex,
+    # also in progress
+    def __str__(self):  # prints the q,r,s of the hex in appropriate format
+        return ' , '.join([str(x) for x in [self.q, self.r, self.s]])
