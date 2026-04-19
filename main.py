@@ -44,31 +44,32 @@ def hexDist(hex1, hex2):
         return max(abs(dubAxisDiff[0]), abs(dubAxisDiff[1]))
 
 
-# returns the euclidian distances between the center of the two given hexes
-def euclidDist(hex1, hex2):
-
-    return math.sqrt((hex1.xEuc - hex2.xEuc)**2 + (hex1.yEuc - hex2.yEuc)**2) # pythagoras type shi
-
-
 if __name__ == '__main__':
     hex1 = Hex(2, 4, 0)
     hex2 = Hex(-3, 0, 2)
 
+    # 2 , 4 , 0
     print(hex1)
     print("\n")
+    # -3 , 0 , 2
     print(hex2)
     print("\n")
 
+    # -1.7320508075688772 , 5.0
     print(hex1.xEuc, ',', hex1.yEuc)
     print("\n")
+    # 4.330127018922193 , -0.5
     print(hex2.xEuc, ',', hex2.yEuc)
     print("\n")
 
+    # 9
     print("hex distance between hexes is: ")
     print(hexDist(hex1, hex2))
     print("\n")
-    print("Euclidian distance between hexes is: ")
-    eDistance = euclidDist(hex1, hex2)
-    print(eDistance)
-    print('end')
 
+    # 8.185352771872449
+    print("Euclidian distance between hexes is: ")
+    eDistance = Hex.euclidDist(hex1, hex2)
+    print(eDistance)
+
+    print('end')

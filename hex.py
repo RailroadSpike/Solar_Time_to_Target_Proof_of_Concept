@@ -56,6 +56,11 @@ class Hex:
         # if direction == 0:
         return
 
+    # returns the euclidian distances between the center of the two given hexes
+    @classmethod
+    def euclidDist(cls, hex1, hex2):
+        return math.sqrt((hex1.xEuc - hex2.xEuc) ** 2 + (hex1.yEuc - hex2.yEuc) ** 2)  # pythagoras type shi
+
     # prints some basic info about the hex,
     # also in progress
     def __str__(self):  # prints the q,r,s of the hex in appropriate format
