@@ -12,69 +12,7 @@ import math
 #import matplotlib.pyplot as plt  #  may be used in the future to draw our hexes and orbits
 #from sympy import symbols # may be used for some symbolic algebra later
 
-
-# hex , defined using triaxials coordinates
-# q axis is 60 degrees counter-clockwise of the vertical
-# r axis vertical
-# s axis is 60 degrees clockwise of the vertical
-# HEX center to center distance D IS THE UNIT OF MEASUREMENT;  so all measurements can be considered to be a factor of D.
-class Hex:
-    def __init__(self, q,r,s):  # coordinates defining the hex; uses triax
-        self.q = q
-        self.r = r
-        self.s = s
-
-        self.vertsXArray = []
-        self.vertsYArray = []
-
-        # Calculate and store the euclidian coordinates of the center of the hex.  x/y coordinates stored in an array self.center
-        self.xEuc = - math.sqrt(3)*0.5*self.q + math.sqrt(3)*0.5*self.s  # derived using vector addition.
-        self.yEuc = 0.5*self.q + r + 0.5*self.s  # derived using vector addition.
-        self.center = []  # euclidian coords stored as x,y, stored an as array for easier access
-        self.center.append(self.xEuc)
-        self.center.append(self.yEuc)
-
-        # Verticie locations of the hex; vert 0 is first clockwise from r axis, increases clockwise.
-        # vert locations are calculated relative to the center of the hex. just a bit of trig
-        # these will be important for drawing hexes later.
-
-        # append vert 0 coordinates
-        self.vertsXArray.append(self.xEuc + 1 / (2 * math.sqrt(3)))
-        self.vertsYArray.append(self.yEuc + 0.5)
-
-        #append vert 1 coordinates
-        self.vertsXArray.append(self.xEuc + 0.5)
-        self.vertsYArray.append(self.yEuc)
-
-        # append vert 2 cords
-        self.vertsXArray.append(self.xEuc + 1 / (2 * math.sqrt(3)))
-        self.vertsYArray.append(self.yEuc - 0.5)
-
-        # append vert 3 cords
-        self.vertsXArray.append(self.xEuc - 1 / (2 * math.sqrt(3)))
-        self.vertsYArray.append(self.yEuc - 0.5)
-
-        # append vert 4 cords
-        self.vertsXArray.append(self.xEuc - 0.5)
-        self.vertsYArray.append(self.yEuc)
-
-        # append vert 5 cords
-        self.vertsXArray.append(self.xEuc - 1 / (2 * math.sqrt(3)))
-        self.vertsYArray.append(self.yEuc + 0.5)
-
-        # get the q,r,s coordinates in the next hex in a given direction.  0 is along the r axis, directions increment clockwise
-        # in progress
-    def getNeighbor(self, direction):
-        # if direction == 0:
-        return
-
-        # prints some basic info about the hex,
-        # also in progress
-    def printHex(self): #prints the q,r,s of the hex in appropriate format
-        print(self.q, ',', self.r, ',', self.s)
-        return
-
-
+from hex import Hex
 
 
 # hex mathematics functions
@@ -112,21 +50,9 @@ def euclidDist(hex1, hex2):
     return math.sqrt((hex1.xEuc - hex2.xEuc)**2 + (hex1.yEuc - hex2.yEuc)**2) # pythagoras type shi
 
 
-# planet class i havent really implemented yet
-class CelestialBody:
-    def __init__(self, inputRadius, inputDir, startingQ, startingR, startingS):
-        self.orbitRadius = inputRadius # for this example, all orbits are assumed to be circular.  the starting hex is assumed to be on the circular orbit.  The
-        self.startingHex = Hex(startingQ, startingR, startingS)  # initialize the starting hex object
-        self.center = Hex(0,0,0)                        # middle of the grid; we will need this for radius calc.
-        self.orbitDir = inputDir    # 0 for clockwise orbit, 1 for counterclockwise orbit.
-        self.orbitHexList = [] # array of hex objects which form the orbit; the index of this array is the location of the celestial body at day index
-
-        # time to determine which hexes comprise the celestial body's orbit.
-
-
 if __name__ == '__main__':
-    hex1 = Hex(2,4,0)
-    hex2 = Hex(-3,0,2)
+    hex1 = Hex(2, 4, 0)
+    hex2 = Hex(-3, 0, 2)
 
     hex1.printHex()
     print("\n")
