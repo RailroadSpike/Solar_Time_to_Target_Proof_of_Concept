@@ -67,10 +67,39 @@ class Hex:
             q += 1
         return q, r, s
 
+    # hex mathematics functions
+
     # returns the euclidian distances between the center of the two given hexes
     @classmethod
     def euclidDist(cls, hex1, hex2):
         return math.sqrt((hex1.xEuc - hex2.xEuc) ** 2 + (hex1.yEuc - hex2.yEuc) ** 2)  # pythagoras type shi
+
+    # returns the manhattan hex distance between hex1 and hex2.  Im SURE there is a more eligant
+    # solution, but this is what I could figure out after staring at the problem for DAYS
+    @classmethod
+    def hexDist(cls, hex1, hex2):
+        # convert to two axis q, r format, called dubAxis format in this function. hold the 2 axis hexes in arrays for simplicity, [q,r]
+        dubAxis1 = []
+        dubAxis2 = []
+        dubAxisDiff = []
+        dubAxis1.append(hex1.q - hex1.s)  # moving +1 in the s axis is equivalent to moving -1 q and +1 r,
+        dubAxis1.append(hex1.r + hex1.s)
+
+        dubAxis2.append(hex2.q - hex2.s)  # convert both qrs hexes
+        dubAxis2.append(hex2.r + hex2.s)
+
+        # take the difference of the two hex coordinates
+        dubAxisDiff.append(dubAxis1[0] - dubAxis2[0])
+        dubAxisDiff.append(dubAxis1[1] - dubAxis2[1])
+
+        # logic for the distahce:
+        # if the difference vector q and r components have the same sign, the distance is the absolute value of their sum
+        # if the difference vector q and r components have different signs, OR if one component is zero, the distances is the absolute max of the two
+        #   THIS WAS DERIVED OBSERVATIONALLY DO NOT ASK ME WHY
+        if dubAxisDiff[0] * dubAxisDiff[1] > 0:  # check if the two components of the difference have the same sign
+            return abs(dubAxisDiff[0]) + abs(dubAxisDiff[1])
+        else:
+            return max(abs(dubAxisDiff[0]), abs(dubAxisDiff[1]))
 
     # prints some basic info about the hex,
     # also in progress
