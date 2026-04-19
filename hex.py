@@ -2,15 +2,12 @@ import math
 
 
 # hex , defined using triaxials coordinates
-# q axis is 60 degrees counter-clockwise of the vertical
-# r axis vertical
-# s axis is 60 degrees clockwise of the vertical
 # HEX center to center distance D IS THE UNIT OF MEASUREMENT;  so all measurements can be considered to be a factor of D.
 class Hex:
-    def __init__(self, q,r,s):  # coordinates defining the hex; uses triax
-        self.q = q
-        self.r = r
-        self.s = s
+    def __init__(self, q, r, s):  # coordinates defining the hex; uses triax
+        self.q = q  # q axis is 60 degrees counter-clockwise of the vertical
+        self.r = r  # r axis vertical
+        self.s = s  # s axis is 60 degrees clockwise of the vertical
 
         self.vertsXArray = []
         self.vertsYArray = []
@@ -30,7 +27,7 @@ class Hex:
         self.vertsXArray.append(self.xEuc + 1 / (2 * math.sqrt(3)))
         self.vertsYArray.append(self.yEuc + 0.5)
 
-        #append vert 1 coordinates
+        # append vert 1 coordinates
         self.vertsXArray.append(self.xEuc + 0.5)
         self.vertsYArray.append(self.yEuc)
 
@@ -53,8 +50,22 @@ class Hex:
         # get the q,r,s coordinates in the next hex in a given direction.  0 is along the r axis, directions increment clockwise
         # in progress
     def getNeighbor(self, direction):
-        # if direction == 0:
-        return
+        q = self.q
+        r = self.r
+        s = self.s
+        if direction == 0:
+            r += 1
+        elif direction == 1:
+            s += 1
+        elif direction == 2:
+            q -= 1
+        elif direction == 3:
+            r -= 1
+        elif direction == 4:
+            s -= 1
+        elif direction == 5:
+            q += 1
+        return q, r, s
 
     # returns the euclidian distances between the center of the two given hexes
     @classmethod
