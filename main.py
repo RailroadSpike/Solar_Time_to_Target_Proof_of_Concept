@@ -15,34 +15,32 @@
 from hex import Hex
 
 
+def test(function, parameters, answer, name):
+    print(f"### Testing {name} ###")
+    result = function(*parameters)  # tuple expansion
+    print(f"-> {result}")
+    print(f'   {answer} targeted')
+    message = "PASS ---" if result == answer else "FAIL !!!"
+    print(message)
+    print("###")
 
 
 if __name__ == '__main__':
     hex1 = Hex(2, 4, 0)
     hex2 = Hex(-3, 0, 2)
 
-    # 2 , 4 , 0
-    print(hex1)
-    print("\n")
-    # -3 , 0 , 2
-    print(hex2)
-    print("\n")
+    test(str, (hex1,), "2 , 4 , 0", "hex1.__str__()")
+    test(str, (hex2,), "-3 , 0 , 2", "hex2.__str__()")
+    print()
 
-    # -1.7320508075688772 , 5.0
-    print(hex1.xEuc, ',', hex1.yEuc)
-    print("\n")
-    # 4.330127018922193 , -0.5
-    print(hex2.xEuc, ',', hex2.yEuc)
-    print("\n")
+    test(str, (hex1.xEuc,), "-1.7320508075688772", "hex1.xEuc.__str__()")
+    test(str, (hex1.yEuc,), "5.0", "hex1.yEuc.__str__()")
+    test(str, (hex2.xEuc,), "4.330127018922193", "hex2.xEuc.__str__()")
+    test(str, (hex2.yEuc,), "-0.5", "hex2.yEuc.__str__()")
+    print()
 
-    # 9
-    print("hex distance between hexes is: ")
-    print(Hex.hexDist(hex1, hex2))
-    print("\n")
-
-    # 8.185352771872449
-    print("Euclidian distance between hexes is: ")
-    eDistance = Hex.euclidDist(hex1, hex2)
-    print(eDistance)
+    test(Hex.hexDist, (hex1, hex2), 9, "Hex distance")
+    test(Hex.euclidDist, (hex1, hex2), 8.185352771872449, "Euclidian distance")
+    print()
 
     print('end')
