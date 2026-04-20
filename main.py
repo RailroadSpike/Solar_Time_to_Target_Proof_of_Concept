@@ -18,9 +18,9 @@ from hex import Hex
 def test(function, parameters, answer, name):
     print(f"### Testing {name} ###")
     result = function(*parameters)  # tuple expansion
-    print(f"-> {result}")
     print(f'   {answer} targeted')
-    message = "PASS ---" if result == answer else "FAIL !!!"
+    print(f"-> {result}")
+    message = "### PASS" if result == answer else "### FAIL !!!"
     print(message)
     print("###")
 
