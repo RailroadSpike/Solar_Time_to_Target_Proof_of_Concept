@@ -26,21 +26,35 @@ def test(function, parameters, answer, name):
 
 
 if __name__ == '__main__':
-    hex1 = Hex(2, 4, 0)
-    hex2 = Hex(-3, 0, 2)
+    hex_0 = Hex(0, 0, 0)
+    hex_1 = Hex(2, 4, 0)
+    hex_2 = Hex(-3, 0, 2)
+    hex_3 = Hex(0, 3, 2)
+    hex_4 = Hex(-3, -1, 0)
+    hex_5 = Hex(0, -1, -1)
+    hex_6 = Hex(2, 0, -2)
 
-    test(str, (hex1,), "2 , 4 , 0", "hex1.__str__()")
-    test(str, (hex2,), "-3 , 0 , 2", "hex2.__str__()")
+    hex_0d = Hex(0, 1, 0)
+    hex_60d = Hex(0, 0, 1)
+    hex_120d = Hex(1, 0, 0)
+    hex_180d = Hex(-1, 0, 0)
+    hex_240d = Hex(0, -1, 0)
+    hex_300d = Hex(0, 0, -1)
+
+    test(str, (hex_1,), "2 , 4 , 0", "hex1.__str__()")
+    test(str, (hex_2,), "-3 , 0 , 2", "hex2.__str__()")
     print()
 
-    test(str, (hex1.xEuc,), "-1.7320508075688772", "hex1.xEuc.__str__()")
-    test(str, (hex1.yEuc,), "5.0", "hex1.yEuc.__str__()")
-    test(str, (hex2.xEuc,), "4.330127018922193", "hex2.xEuc.__str__()")
-    test(str, (hex2.yEuc,), "-0.5", "hex2.yEuc.__str__()")
+    test(str, (hex_1.xEuc,), "-1.7320508075688772", "hex1.xEuc.__str__()")
+    test(str, (hex_1.yEuc,), "5.0", "hex1.yEuc.__str__()")
+    test(str, (hex_2.xEuc,), "4.330127018922193", "hex2.xEuc.__str__()")
+    test(str, (hex_2.yEuc,), "-0.5", "hex2.yEuc.__str__()")
     print()
 
-    test(Hex.hexDist, (hex1, hex2), 9, "Hex distance")
-    test(Hex.euclidDist, (hex1, hex2), 8.185352771872449, "Euclidian distance")
+    test(Hex.hexDist, (hex_1, hex_2), 9, "Hex distance")
+    test(Hex.hexDist, (hex_0d, hex_0), 1, "Hex distance along vertical axis")
+    test(Hex.euclidDist, (hex_1, hex_2), 8.185352771872449, "Euclidean distance")
+    test(Hex.euclidDist, (hex_0d, hex_0), 1.0, "Euclidean distance along vertical axis")
     print()
 
     print('end')
