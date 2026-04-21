@@ -16,13 +16,18 @@ from hex import Hex
 
 
 def test(function, parameters, answer, name):
+    exit_code = 0
+    message = "### PASS"
     print(f"### Testing {name} ###")
     result = function(*parameters)  # tuple expansion
     print(f'   {answer} targeted')
     print(f"-> {result}")
-    message = "### PASS" if result == answer else "### FAIL !!!"
+    if result != answer:
+        message = "### FAIL !!!"
+        exit_code = 1
     print(message)
     print("###")
+    return exit_code
 
 
 if __name__ == '__main__':
@@ -41,20 +46,23 @@ if __name__ == '__main__':
     hex_240d = Hex(0, -1, 0)
     hex_300d = Hex(0, 0, -1)
 
-    test(str, (hex_1,), "2 , 4 , 0", "hex1.__str__()")
-    test(str, (hex_2,), "-3 , 0 , 2", "hex2.__str__()")
+    failures = 0
+
+    failures += test(str, (hex_1,), "2 , 4 , 0", "hex1.__str__()")
+    failures += test(str, (hex_2,), "-3 , 0 , 2", "hex2.__str__()")
     print()
 
-    test(str, (hex_1.xEuc,), "-1.7320508075688772", "hex1.xEuc.__str__()")
-    test(str, (hex_1.yEuc,), "5.0", "hex1.yEuc.__str__()")
-    test(str, (hex_2.xEuc,), "4.330127018922193", "hex2.xEuc.__str__()")
-    test(str, (hex_2.yEuc,), "-0.5", "hex2.yEuc.__str__()")
+    failures += test(str, (hex_1.xEuc,), "-1.7320508075688772", "hex1.xEuc.__str__()")
+    failures += test(str, (hex_1.yEuc,), "5.0", "hex1.yEuc.__str__()")
+    failures += test(str, (hex_2.xEuc,), "4.330127018922193", "hex2.xEuc.__str__()")
+    failures += test(str, (hex_2.yEuc,), "-0.5", "hex2.yEuc.__str__()")
     print()
 
-    test(Hex.hexDist, (hex_1, hex_2), 9, "Hex distance")
-    test(Hex.hexDist, (hex_0d, hex_0), 1, "Hex distance along vertical axis")
-    test(Hex.euclidDist, (hex_1, hex_2), 8.185352771872449, "Euclidean distance")
-    test(Hex.euclidDist, (hex_0d, hex_0), 1.0, "Euclidean distance along vertical axis")
+    failures += test(Hex.hexDist, (hex_1, hex_2), 9, "Hex distance")
+    failures += test(Hex.hexDist, (hex_0d, hex_0), 1, "Hex distance along vertical axis")
+    failures += test(Hex.euclidDist, (hex_1, hex_2), 8.185352771872449, "Euclidean distance")
+    failures += test(Hex.euclidDist, (hex_0d, hex_0), 1.0, "Euclidean distance along vertical axis")
     print()
 
+    print(f'{failures} failed tests')
     print('end')
