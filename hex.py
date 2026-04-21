@@ -5,6 +5,7 @@ import math
 # HEX center to center distance D IS THE UNIT OF MEASUREMENT;  so all measurements can be considered to be a factor of D.
 class Hex:
     def __init__(self, q, r, s):  # coordinates defining the hex; uses triax
+        assert q==0 or r==0 or s==0  # triaxial shortest path constraint
         self.q = q  # q axis is 60 degrees counter-clockwise of the vertical
         self.r = r  # r axis vertical
         self.s = s  # s axis is 60 degrees clockwise of the vertical
