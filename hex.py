@@ -10,6 +10,8 @@ class Hex:
         self.r = r  # r axis vertical
         self.s = s  # s axis is 60 degrees clockwise of the vertical
 
+        self.sector = self.get_sector()
+
         self.vertsXArray = []
         self.vertsYArray = []
 
@@ -47,6 +49,35 @@ class Hex:
         # append vert 5 cords
         self.vertsXArray.append(self.xEuc - 1 / (2 * math.sqrt(3)))
         self.vertsYArray.append(self.yEuc + 0.5)
+
+    def get_sector(self):
+        sector = None  # the sector of [0, 0, 0] is None
+
+        # position is off the vertical axis
+        # (shortest path to origin does not travel on vertical axis)
+        if self.r == 0:
+            if self.q > 0 or self.s < 0:  # positive q, negative s = 240-300 degrees
+                sector = 4
+            elif self.q < 0 or self.s > 0:  # negative q, positive s = 60-120 degrees
+                sector = 1
+
+        # position is off the -60deg axis
+        # (shortest path to origin does not travel on the q axis)
+        elif self.q == 0:
+            if self.r > 0 or self.s > 0:  # positive r, positive s = 0-60 degrees
+                sector = 0
+            elif self.r < 0 or self.s < 0:  # negative r, negative s = 180-240 degrees
+                sector = 3
+
+        # position is off the 60deg axis
+        # (shortest path to origin does not travel on the s axis)
+        elif self.s == 0:
+            if self.r > 0 or self.q > 0:  # positive q, positive r = 300-360 degrees
+                sector = 5
+            elif self.r < 0 or self.q < 0:  # negative q, negative r = 120-180 degrees
+                sector = 2
+
+        return sector
 
         # get the q,r,s coordinates in the next hex in a given direction.  0 is along the r axis, directions increment clockwise
         # in progress
