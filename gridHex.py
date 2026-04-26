@@ -1,6 +1,5 @@
 import math
 
-
 # hex , defined using triaxials coordinates
 # HEX center to center distance D IS THE UNIT OF MEASUREMENT;  so all measurements can be considered to be a factor of D.
 class Hex:
@@ -8,6 +7,10 @@ class Hex:
         self.q = q  # q axis is 60 degrees counter-clockwise of the vertical
         self.r = r  # r axis vertical
         self.s = s  # s axis is 60 degrees clockwise of the vertical
+
+        # cubic coordinates of the hex
+        self.x, self.y, self.z = triaxToCubic(self.q, self.r, self.s)
+
 
         self.vertsXArray = []
         self.vertsYArray = []
@@ -21,7 +24,7 @@ class Hex:
 
         # Verticie locations of the hex; vert 0 is first clockwise from r axis, increases clockwise.
         # vert locations are calculated relative to the center of the hex. just a bit of trig
-        # these will be important for drawing hexes later.
+        # these may be important for drawing hexes later.
 
         # append vert 0 coordinates
         self.vertsXArray.append(self.xEuc + 1 / (2 * math.sqrt(3)))
@@ -67,6 +70,7 @@ class Hex:
             q += 1
         return q, r, s
 
+
     # hex mathematics functions
 
     # returns the euclidian distances between the center of the two given hexes
@@ -76,6 +80,7 @@ class Hex:
 
     # returns the manhattan hex distance between hex1 and hex2.  Im SURE there is a more eligant
     # solution, but this is what I could figure out after staring at the problem for DAYS
+    # THIS SHOULD BE REFACTORED TO USE CUBIC DISTANCE FORMULAS
     @classmethod
     def hexDist(cls, hex1, hex2):
         # convert to two axis q, r format, called dubAxis format in this function. hold the 2 axis hexes in arrays for simplicity, [q,r]
@@ -105,3 +110,61 @@ class Hex:
     # also in progress
     def __str__(self):  # prints the q,r,s of the hex in appropriate format
         return ' , '.join([str(x) for x in [self.q, self.r, self.s]])
+
+
+# conversion functions to convert between triaxial qrs and cubic xyz coordinates
+from gridHex import Hex
+
+
+# given a set of q,r,s triax coordianes,
+# from Ske
+def triaxToCubic(q,r,s) :
+    x = 0
+    y = -q - r - x
+    z = q + x
+
+    if (s < 0 and q > 0):  # or (y < 0 and z > 0):
+        if r > 0:
+            x = -q
+            y = -r
+            z = 0
+        else:
+            x = -q - r
+            y = 0
+            z = r
+    elif (s > 0 and q < 0):  # or (y > 0 and z < 0):
+        if r < 0:
+            x = -q
+            y = -r
+            z = 0
+        else:
+            x = -q - r
+            y = 0
+            z = r
+    return x, y, z
+
+# given a set f x,y,z cubic coordinates, return triax coordinates
+# from Ske
+def cubicToTriax(x,y,z) :
+    q = -x + z
+    r = -y - z
+    s = -q - r
+    return q, r, s
+
+# given a set of x,y,z cube cords, return a hex with the correct q r s coordinates.
+# VERY FUCKED THAT THIS IS HERE; MAYBE THIS FUNCTIONALITY SHOULD BE PART OF THE HEX CLASS
+def initialzeViaCubeCords(x,y,z):
+    q,r,s = cubicToTriax(x,y,z) # conver the given cubic cords to triax
+    return Hex(q,r,s)
+
+# given two hex objects CURRENT and PREVIOUS, take their difference and then sum the difference with CURRENT
+def getNextHex(currentHex, previousHex) :
+    diffX = currentHex.x - previousHex.x
+    diffY = currentHex.y - previousHex.y
+    diffZ = currentHex.z - previousHex.z
+
+    sumX = currentHex.x + diffX   # sum difference with the current hex
+    sumY = currentHex.y + diffY
+    sumZ = currentHex.z + diffZ
+
+    return initialzeViaCubeCords(sumX,sumY, sumZ) # initialize next hex and return it

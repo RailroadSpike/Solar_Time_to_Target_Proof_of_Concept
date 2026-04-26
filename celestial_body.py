@@ -1,4 +1,4 @@
-from hex import Hex
+from gridHex import Hex
 
 
 # planet class i havent really implemented yet
