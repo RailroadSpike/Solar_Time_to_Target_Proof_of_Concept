@@ -113,12 +113,9 @@ class Hex:
 
 
 # conversion functions to convert between triaxial qrs and cubic xyz coordinates
-from gridHex import Hex
-
-
 # given a set of q,r,s triax coordianes,
 # from Ske
-def triaxToCubic(q,r,s) :
+def cubicToTriax(q,r,s) :
     x = 0
     y = -q - r - x
     z = q + x
@@ -145,7 +142,7 @@ def triaxToCubic(q,r,s) :
 
 # given a set f x,y,z cubic coordinates, return triax coordinates
 # from Ske
-def cubicToTriax(x,y,z) :
+def triaxToCubic(x,y,z) :
     q = -x + z
     r = -y - z
     s = -q - r
