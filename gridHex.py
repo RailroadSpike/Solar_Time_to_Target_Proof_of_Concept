@@ -113,39 +113,19 @@ class Hex:
 
 
 # conversion functions to convert between triaxial qrs and cubic xyz coordinates
-from gridHex import Hex
-
-
-# given a set of q,r,s triax coordianes,
+# given a set of q,r,s cubic coordianes, return x,y,z triax coordinates
 # from Ske
-def triaxToCubic(q,r,s) :
-    x = 0
-    y = -q - r - x
-    z = q + x
-
-    if (s < 0 and q > 0):  # or (y < 0 and z > 0):
-        if r > 0:
-            x = -q
-            y = -r
-            z = 0
-        else:
-            x = -q - r
-            y = 0
-            z = r
-    elif (s > 0 and q < 0):  # or (y > 0 and z < 0):
-        if r < 0:
-            x = -q
-            y = -r
-            z = 0
-        else:
-            x = -q - r
-            y = 0
-            z = r
-    return x, y, z
+def cubicToTriax(q,r,s) :
+    if abs(q) >= abs(r) and abs(q) >= abs(s):
+        return (s, 0, -r)
+    elif abs(r) >= abs(s):
+        return (0, s, q)
+    else:
+        return (-q, -r, 0)
 
 # given a set f x,y,z cubic coordinates, return triax coordinates
 # from Ske
-def cubicToTriax(x,y,z) :
+def triaxToCubic(x,y,z) :
     q = -x + z
     r = -y - z
     s = -q - r
@@ -153,7 +133,7 @@ def cubicToTriax(x,y,z) :
 
 # given a set of x,y,z cube cords, return a hex with the correct q r s coordinates.
 # VERY FUCKED THAT THIS IS HERE; MAYBE THIS FUNCTIONALITY SHOULD BE PART OF THE HEX CLASS
-def initialzeViaCubeCords(x,y,z):
+def initViaCubeCords(x,y,z):
     q,r,s = cubicToTriax(x,y,z) # conver the given cubic cords to triax
     return Hex(q,r,s)
 
@@ -167,4 +147,4 @@ def getNextHex(currentHex, previousHex) :
     sumY = currentHex.y + diffY
     sumZ = currentHex.z + diffZ
 
-    return initialzeViaCubeCords(sumX,sumY, sumZ) # initialize next hex and return it
+    return initViaCubeCords(sumX,sumY, sumZ) # initialize next hex and return it
