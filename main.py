@@ -2,7 +2,7 @@
 # define a Hex class with q,r,s coordinates
 
 
-from fontTools.misc.cython import returns
+# from fontTools.misc.cython import returns
 
 # create functions for determining hex and euclidian distance between hexes
 # create functions to calculate travel time based on distance to a hex
@@ -209,7 +209,7 @@ class TestShip(unittest.TestCase):
     def test_init(self):
         testShip = ship(0,2,0)
         #check that the current, previous, next hexes are initialized.
-        self
+        # self
         self.assertTrue(testShip.currentHex.q==0)
         self.assertTrue(testShip.currentHex.r==2)
         self.assertTrue(testShip.currentHex.s==0)
