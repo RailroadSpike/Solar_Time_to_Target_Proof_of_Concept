@@ -2,13 +2,13 @@ from .gridHex import Hex
 
 
 # given two hex objects CURRENT and PREVIOUS, take their difference and then sum the difference with CURRENT
-def getNextHex(currentHex, previousHex):
-    diffX = currentHex.x - previousHex.x
-    diffY = currentHex.y - previousHex.y
-    diffZ = currentHex.z - previousHex.z
+def get_next_hex(current_hex, previous_hex):
+    diff_x = current_hex.x - previous_hex.x
+    diff_y = current_hex.y - previous_hex.y
+    diff_z = current_hex.z - previous_hex.z
 
-    sumX = currentHex.x + diffX  # sum difference with the current hex
-    sumY = currentHex.y + diffY
-    sumZ = currentHex.z + diffZ
+    sum_x = current_hex.x + diff_x  # sum difference with the current hex
+    sum_y = current_hex.y + diff_y
+    sum_z = current_hex.z + diff_z
 
-    return Hex.initViaCubeCords(sumX, sumY, sumZ)  # initialize next hex and return it
+    return Hex.init_via_cube_cords(sum_x, sum_y, sum_z)  # initialize next hex and return it
