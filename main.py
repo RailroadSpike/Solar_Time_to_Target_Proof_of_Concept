@@ -17,6 +17,8 @@ from fontTools.misc.cython import returns
 
 import unittest
 from gridHex import Hex, triaxToCubic, cubicToTriax, initViaCubeCords, getNextHex
+from ship import ship
+
 
 
 class TestHex(unittest.TestCase):
@@ -153,17 +155,17 @@ class TestHex(unittest.TestCase):
         nextHex20 = getNextHex(testHex4,testHex3)
         nextHex30 = getNextHex(testHex6,testHex5)
 
-        print(nextHex10)
+        #print(nextHex10)
         self.assertTrue(nextHex10.q==0)
         self.assertTrue(nextHex10.r==4)
         self.assertTrue(nextHex10.s==0)
 
-        print(nextHex20)
+        #print(nextHex20)
         self.assertTrue(nextHex20.q==0)
         self.assertTrue(nextHex20.r==1)
         self.assertTrue(nextHex20.s==4)
 
-        print(nextHex30)
+        #print(nextHex30)
         self.assertTrue(nextHex30.q == 1)
         self.assertTrue(nextHex30.r == 2)
         self.assertTrue(nextHex30.s == 0)
@@ -185,21 +187,45 @@ class TestHex(unittest.TestCase):
         nextHex50 = getNextHex(testHex10, testHex9)
         nextHex60 = getNextHex(testHex12, testHex11)
 
-        print(nextHex40)
+        #print(nextHex40)
         self.assertTrue(nextHex40.q == 1)
         self.assertTrue(nextHex40.r == 0)
         self.assertTrue(nextHex40.s == 0)
 
-        print(nextHex50)
+        #print(nextHex50)
         self.assertTrue(nextHex50.q == -3)
         self.assertTrue(nextHex50.r == 0)
         self.assertTrue(nextHex50.s == 2)
 
-        print(nextHex60)
+        #print(nextHex60)
         self.assertTrue(nextHex60.q == 0)
         self.assertTrue(nextHex60.r == 10)
         self.assertTrue(nextHex60.s == 4)
 
+    `class test_ship
+
+class TestShip(unittest.TestCase):
+
+    def test_init(self):
+        testShip = ship(0,2,0)
+        #check that the current, previous, next hexes are initialized.
+        self
+        self.assertTrue(testShip.currentHex.q==0)
+        self.assertTrue(testShip.currentHex.r==2)
+        self.assertTrue(testShip.currentHex.s==0)
+
+        self.assertTrue(testShip.previousHex.q==0)
+        self.assertTrue(testShip.previousHex.r==2)
+        self.assertTrue(testShip.previousHex.s==0)
+
+        self.assertTrue(testShip.nextHex.q==0)
+        self.assertTrue(testShip.nextHex.r==2)
+        self.assertTrue(testShip.nextHex.s==0)
+
+        self.assertTrue(testShip.currentBurnOrder==-1)
+
+        #check that the current burn order is -1 (no burn order)
+        return
 
 if __name__ == '__main__':
     unittest.main()

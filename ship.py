@@ -19,12 +19,12 @@ class ship:
         self.previousHex = Hex(qStart,rStart, sStart)  # the velocity vector is calculated based on the current and previous hexes.
         self.nextHex = Hex(qStart,rStart, sStart) # The next hex is calculated by applying the velocity vector to the current hex, then applying any burn orders
 
-        self.currentDay = 0  # current day of the trip.  Trips start at day 0
+        #self.currentDay = 0  # current day of the trip.  Trips start at day 0
         self.currentBurnOrder = -1      # ship's current burn order. 0 is a burn in the r axis direction, increments clockwise.  -1 is no burn order.
-        self.currentHeat = 0  # heat information; not implemented yet.
-        self.maxHeat = 0
-        self.currentSpeed = 0  # not really speed, this tracks how many "prograde" burns the ship has performed.  This info is needed for deceleration calculations
-        self.maxSpeed = 0       # ditto, not speed but the number of prograde burns the ship is allowed to perform on the trip
+        #self.currentHeat = 0  # heat information; not implemented yet.
+        #self.maxHeat = 0
+        #self.currentSpeed = 0  # not really speed, this tracks how many "prograde" burns the ship has performed.  This info is needed for deceleration calculations
+        #self.maxSpeed = 0       # ditto, not speed but the number of prograde burns the ship is allowed to perform on the trip
         self.hexHistory = []  # hexes the ship has occupied, held in an array. appends every day, regardless of if the ship moved.  cleared when a trip starts for testing simplicity
         self.burnHistory = [] # burn orders for the ship.  appends each day, no matter if the ship had a burn order.  Cleared when a trip starts for testing simplicity.
 
@@ -34,9 +34,9 @@ class ship:
         # 2 : cruise + vent
         # 3 : decelerate
         # 4 : arrived
-        self.currentState =  0
-        self.nextState = 0
-        self.stateHistory =[]
+        #self.currentState =  0
+        #self.nextState = 0
+        #self.stateHistory =[]
 
         # sets current hex of the ship; used for initialization
         def setCurrentHex(self, Hex):
@@ -65,11 +65,6 @@ class ship:
                     velocityTargetHex = getNextHex(self.currentHex, self.previousHex) # calculate the next hex from the current and previous hexes
                     self.nextHex = velocityTargetHex.getNeighbor(self.currentBurnOrder) # get the neighbor of the velocity target in the
                 return
-
-        def clearBurnOrder(self):
-
-        # Other functions needed for the state machine
-
             
         # decelrate:  pick a hex that moves the ship towards the target but decreases the hexes traversed tomorrow
         # accelerate:  pick the hex that moves the ship closest to its target
@@ -90,7 +85,9 @@ class ship:
             self.hexHistory.append(self.currentHex)  # save location history information
             self.burnHistory.append(self.currentBurnOrder)  # save burn order history information
             self.currentBurnOrder = -1 # clear burn order
-            self.# update the current hex based on the next hex,
+            self.previousHex = self.currentHex # update previous hex to the current hex
+            self.currentHex = self.nextHex # update the current hex to the nextHex
+            self.nextHex = getNextHex(self.currentHex,self.previousHex) # calculate the next hex, if the ship drifts
             return
 
 
