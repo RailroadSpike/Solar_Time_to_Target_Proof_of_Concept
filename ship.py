@@ -9,15 +9,14 @@
 
 # solar sails not implemented
 
-from gridHex import Hex
-from gridHex import getNextHex
+import gridHex
 
 
 class ship:
     def __init__(self, qStart, rStart, sStart):  # ships are initialized with a location, assumed to start with 0 velocity (next hex same as current hex)
-        self.currentHex = Hex(qStart,rStart, sStart) # ship "velocity" is defined by two hexes, its current hex its hex tomorrow (next hex)
-        self.previousHex = Hex(qStart,rStart, sStart)  # the velocity vector is calculated based on the current and previous hexes.
-        self.nextHex = Hex(qStart,rStart, sStart) # The next hex is calculated by applying the velocity vector to the current hex, then applying any burn orders
+        self.currentHex = gridHex.Hex(qStart,rStart, sStart) # ship "velocity" is defined by two hexes, its current hex its hex tomorrow (next hex)
+        self.previousHex = gridHex.Hex(qStart,rStart, sStart)  # the velocity vector is calculated based on the current and previous hexes.
+        self.nextHex = gridHex.Hex(qStart,rStart, sStart) # The next hex is calculated by applying the velocity vector to the current hex, then applying any burn orders
 
         #self.currentDay = 0  # current day of the trip.  Trips start at day 0
         self.currentBurnOrder = -1      # ship's current burn order. 0 is a burn in the r axis direction, increments clockwise.  -1 is no burn order.
@@ -39,13 +38,13 @@ class ship:
         #self.stateHistory =[]
 
         # sets current hex of the ship; used for initialization
-        def setCurrentHex(self, Hex):
-            self.currentHex = Hex
+        def setCurrentHex(self, hex):
+            self.currentHex = hex
             return
 
         # sets next hex of the ship.  for initialization and testing;
-        def setNextHex(self, Hex):
-            self.nextHex = Hex
+        def setNextHex(self, hex):
+            self.nextHex = hex
             return
 
         # sets burn order variable, and updates the next hex if necessary.
@@ -58,11 +57,11 @@ class ship:
             else :
                 # different cases for no burn order (-1) vs others
                 if newBurnOrder == -1 :
-                    self.nextHex = getNextHex(self.currentHex, self.previousHex) # if no burn order, the ship drifts the same distance as it did the previous iteration
+                    self.nextHex = gridHex.getNextHex(self.currentHex, self.previousHex) # if no burn order, the ship drifts the same distance as it did the previous iteration
                     return
                 else:
                     # if there is a burn order, the ship changes its next hex location by one in that direction
-                    velocityTargetHex = getNextHex(self.currentHex, self.previousHex) # calculate the next hex from the current and previous hexes
+                    velocityTargetHex = gridHex.getNextHex(self.currentHex, self.previousHex) # calculate the next hex from the current and previous hexes
                     self.nextHex = velocityTargetHex.getNeighbor(self.currentBurnOrder) # get the neighbor of the velocity target in the
                 return
             
@@ -71,7 +70,7 @@ class ship:
 
         # Tick day:  When the day ticks over, move the ship and then calculate the next state.  This will eventually be used for the ship state machine.
         def tickDay(self):
-            todayHex = Hex(self.currentHex.q, self.currentHex.r, self.curretHex.s)  # create new current location hex and append it to the hex History array
+            todayHex = gridHex.Hex(self.currentHex.q, self.currentHex.r, self.curretHex.s)  # create new current location hex and append it to the hex History array
             # subtract the next hex from the current hex to get the distance vector
             # move the ship ( next hex becomes current hex)
             # append burn order to the history
@@ -87,7 +86,7 @@ class ship:
             self.currentBurnOrder = -1 # clear burn order
             self.previousHex = self.currentHex # update previous hex to the current hex
             self.currentHex = self.nextHex # update the current hex to the nextHex
-            self.nextHex = getNextHex(self.currentHex,self.previousHex) # calculate the next hex, if the ship drifts
+            self.nextHex = gridHex.getNextHex(self.currentHex,self.previousHex) # calculate the next hex, if the ship drifts
             return
 
 

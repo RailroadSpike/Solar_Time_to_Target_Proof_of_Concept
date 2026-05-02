@@ -16,7 +16,9 @@
 # from sympy import symbols # may be used for some symbolic algebra later
 
 import unittest
-from gridHex import Hex, triaxToCubic, cubicToTriax, getNextHex
+from gridHex import Hex
+from gridHex import getNextHex
+from gridHex.utils import cubicToTriax, triaxToCubic
 from ship import ship
 
 

@@ -1,7 +1,11 @@
 import math
 
+
 # hex , defined using triaxials coordinates
 # HEX center to center distance D IS THE UNIT OF MEASUREMENT;  so all measurements can be considered to be a factor of D.
+from .utils import cubicToTriax, triaxToCubic
+
+
 class Hex:
     def __init__(self, q, r, s):  # coordinates defining the hex; uses triax
         self.q = q  # q axis is 60 degrees counter-clockwise of the vertical
@@ -116,36 +120,3 @@ class Hex:
     def initViaCubeCords(cls, x, y, z):
         q, r, s = cubicToTriax(x, y, z)  # conver the given cubic cords to triax
         return Hex(q, r, s)
-
-
-# conversion functions to convert between triaxial qrs and cubic xyz coordinates
-# given a set of q,r,s cubic coordianes, return x,y,z triax coordinates
-# from Ske
-def cubicToTriax(q,r,s) :
-    if abs(q) >= abs(r) and abs(q) >= abs(s):
-        return (s, 0, -r)
-    elif abs(r) >= abs(s):
-        return (0, s, q)
-    else:
-        return (-q, -r, 0)
-
-# given a set f x,y,z cubic coordinates, return triax coordinates
-# from Ske
-def triaxToCubic(x,y,z) :
-    q = -x + z
-    r = -y - z
-    s = -q - r
-    return q, r, s
-
-
-# given two hex objects CURRENT and PREVIOUS, take their difference and then sum the difference with CURRENT
-def getNextHex(currentHex, previousHex) :
-    diffX = currentHex.x - previousHex.x
-    diffY = currentHex.y - previousHex.y
-    diffZ = currentHex.z - previousHex.z
-
-    sumX = currentHex.x + diffX   # sum difference with the current hex
-    sumY = currentHex.y + diffY
-    sumZ = currentHex.z + diffZ
-
-    return Hex.initViaCubeCords(sumX,sumY, sumZ) # initialize next hex and return it
