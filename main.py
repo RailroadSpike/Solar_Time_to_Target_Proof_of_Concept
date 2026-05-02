@@ -16,9 +16,8 @@
 # from sympy import symbols # may be used for some symbolic algebra later
 
 import unittest
-from gridHex import Hex, triaxToCubic, cubicToTriax, initViaCubeCords, getNextHex
+from gridHex import Hex, triaxToCubic, cubicToTriax, getNextHex
 from ship import ship
-
 
 
 class TestHex(unittest.TestCase):
@@ -119,9 +118,9 @@ class TestHex(unittest.TestCase):
         y3 = -3
         z3 = 0
 
-        hex1 = initViaCubeCords(x1,y1,z1)
-        hex2 = initViaCubeCords(x2,y2,z2)
-        hex3 = initViaCubeCords(x3,y3,z3)
+        hex1 = Hex.initViaCubeCords(x1,y1,z1)
+        hex2 = Hex.initViaCubeCords(x2,y2,z2)
+        hex3 = Hex.initViaCubeCords(x3,y3,z3)
 
         #print(hex1)
         self.assertTrue(hex1.q==3)
@@ -204,6 +203,7 @@ class TestHex(unittest.TestCase):
 
     # `class test_ship
 
+
 class TestShip(unittest.TestCase):
 
     def test_init(self):
@@ -222,10 +222,11 @@ class TestShip(unittest.TestCase):
         self.assertTrue(testShip.nextHex.r==2)
         self.assertTrue(testShip.nextHex.s==0)
 
+        # check that the current burn order is -1 (no burn order)
         self.assertTrue(testShip.currentBurnOrder==-1)
 
-        #check that the current burn order is -1 (no burn order)
         return
+
 
 if __name__ == '__main__':
     unittest.main()

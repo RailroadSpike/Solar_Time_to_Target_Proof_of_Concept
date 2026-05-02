@@ -111,6 +111,12 @@ class Hex:
     def __str__(self):  # prints the q,r,s of the hex in appropriate format
         return ' , '.join([str(x) for x in [self.q, self.r, self.s]])
 
+    # given a set of x,y,z cube cords, return a hex with the correct q r s coordinates.
+    @classmethod
+    def initViaCubeCords(cls, x, y, z):
+        q, r, s = cubicToTriax(x, y, z)  # conver the given cubic cords to triax
+        return Hex(q, r, s)
+
 
 # conversion functions to convert between triaxial qrs and cubic xyz coordinates
 # given a set of q,r,s cubic coordianes, return x,y,z triax coordinates
@@ -131,11 +137,6 @@ def triaxToCubic(x,y,z) :
     s = -q - r
     return q, r, s
 
-# given a set of x,y,z cube cords, return a hex with the correct q r s coordinates.
-# VERY FUCKED THAT THIS IS HERE; MAYBE THIS FUNCTIONALITY SHOULD BE PART OF THE HEX CLASS
-def initViaCubeCords(x,y,z):
-    q,r,s = cubicToTriax(x,y,z) # conver the given cubic cords to triax
-    return Hex(q,r,s)
 
 # given two hex objects CURRENT and PREVIOUS, take their difference and then sum the difference with CURRENT
 def getNextHex(currentHex, previousHex) :
@@ -147,4 +148,4 @@ def getNextHex(currentHex, previousHex) :
     sumY = currentHex.y + diffY
     sumZ = currentHex.z + diffZ
 
-    return initViaCubeCords(sumX,sumY, sumZ) # initialize next hex and return it
+    return Hex.initViaCubeCords(sumX,sumY, sumZ) # initialize next hex and return it
