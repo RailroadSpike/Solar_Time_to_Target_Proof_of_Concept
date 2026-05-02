@@ -1,3 +1,6 @@
+# !!!
+# !!! This file is deprecated.
+# !!!
 # conversion functions to convert between triaxial qrs and cubic xyz coordinates
 from gridHex import Hex
 

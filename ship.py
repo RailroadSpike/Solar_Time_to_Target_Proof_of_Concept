@@ -10,7 +10,7 @@
 # solar sails not implemented
 
 from gridHex import Hex
-from hexCordConversionFunctions import getNextHex
+from gridHex import getNextHex
 
 
 class ship:
