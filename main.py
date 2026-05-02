@@ -202,7 +202,7 @@ class TestHex(unittest.TestCase):
         self.assertTrue(nextHex60.r == 10)
         self.assertTrue(nextHex60.s == 4)
 
-    `class test_ship
+    # `class test_ship
 
 class TestShip(unittest.TestCase):
 
